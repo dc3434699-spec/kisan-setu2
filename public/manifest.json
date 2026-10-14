@@ -1,0 +1,21 @@
+{
+  "short_name": "KisanSetu 2.0",
+  "name": "KisanSetu 2.0 - Complete Agricultural Ecosystem",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#FAF9F6",
+  "theme_color": "#1B5E3B",
+  "display": "standalone",
+  "orientation": "portrait"
+}

@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-warm: #FAF9F6;
+    --text-forest: #2D3A26;
+    --primary-green: #1B5E3B;
+  }
+
+  body {
+    background-color: #FAF9F6;
+    color: #2D3A26;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Newsreader', Georgia, serif;
+  }
+}
+
+/* Custom Scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* High Contrast Mode for outdoor farm sunlight */
+html.high-contrast {
+  filter: contrast(115%);
+}
+html.high-contrast body {
+  background-color: #F4F2EC;
+  color: #111B10;
+}
+html.high-contrast .bg-white {
+  background-color: #FFFFFF !important;
+  border-color: #2D3A26 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2) !important;
+}
+html.high-contrast button {
+  border-width: 2px !important;
+}
+
+/* Font Size Scaling */
+html.text-size-large {
+  font-size: 110%;
+}
+html.text-size-xlarge {
+  font-size: 125%;
+}
+
+/* Animations */
+@keyframes pulseSlow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 3s infinite ease-in-out;
+}
