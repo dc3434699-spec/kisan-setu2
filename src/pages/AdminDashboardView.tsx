@@ -5,10 +5,33 @@ import { Shield, Users, ShoppingBag, DollarSign, Sprout, Compass, CheckCircle2, 
 
 export const AdminDashboardView: React.FC = () => {
   const { products, orders, slots, bookings, workerRequests, laborGroups } = useStore();
-  const { allUsers } = useAuth();
+  const { allUsers, currentUser, loginAsDemo } = useAuth();
 
   const [activeTab, setActiveTab] = useState<'farmers' | 'orders' | 'labour' | 'tours'>('farmers');
   const [searchTerm, setSearchTerm] = useState('');
+
+  if (currentUser?.role !== 'admin') {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-20 text-center space-y-4">
+        <div className="w-16 h-16 rounded-3xl bg-purple-100 text-purple-700 mx-auto flex items-center justify-center shadow-xs">
+          <Shield className="w-8 h-8" />
+        </div>
+        <h2 className="font-serif text-2xl font-bold text-[#1B3B22]">Administrator Authorization Required</h2>
+        <p className="text-xs text-gray-600 max-w-md mx-auto leading-relaxed">
+          The Central Oversight Command Portal is restricted to platform administrators to review ecosystem GMV, farmer KYC land verification, and rural dispute resolution.
+        </p>
+        <div className="pt-2">
+          <button
+            onClick={() => loginAsDemo('admin')}
+            className="px-6 py-3 rounded-2xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs shadow-md transition-all cursor-pointer inline-flex items-center gap-2"
+          >
+            <Shield className="w-4 h-4" />
+            <span>Sign In as Platform Admin (Demo)</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const farmers = allUsers.filter(u => u.role === 'farmer');
   const consumers = allUsers.filter(u => u.role === 'consumer');

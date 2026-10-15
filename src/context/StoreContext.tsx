@@ -117,7 +117,32 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return fallback;
   };
 
-  const [products, setProducts] = useState<Product[]>(() => load('kisansetu_products', initialProducts));
+  const [products, setProducts] = useState<Product[]>(() => {
+    const loaded = load<Product[]>('kisansetu_products', initialProducts);
+    // Automatic schema migration: ensure updated spinach image and pricing discounts are applied
+    return loaded.map(p => {
+      if (p.id === 'prod_spinach_rajesh') {
+        return {
+          ...p,
+          image: '/images/spinach.jpg',
+          pricePerUnit: 25,
+          originalPrice: 30,
+          discountPercent: 17,
+          promotionalBadge: '17% OFF / Save ₹5'
+        };
+      }
+      const initial = initialProducts.find(ip => ip.id === p.id);
+      if (initial && initial.originalPrice && !p.originalPrice) {
+        return {
+          ...p,
+          originalPrice: initial.originalPrice,
+          discountPercent: initial.discountPercent,
+          promotionalBadge: initial.promotionalBadge
+        };
+      }
+      return p;
+    });
+  });
   const [cart, setCart] = useState<CartItem[]>(() => load('kisansetu_cart', []));
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(() => load('kisansetu_coupon', null));
   const [orders, setOrders] = useState<Order[]>(() => load('kisansetu_orders', initialOrders));

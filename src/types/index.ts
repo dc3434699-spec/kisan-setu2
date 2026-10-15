@@ -64,6 +64,9 @@ export interface Product {
   batchId: string;
   nutritionalHighlights?: string[];
   shelfLife?: string;
+  originalPrice?: number;
+  discountPercent?: number;
+  promotionalBadge?: string;
 }
 
 export interface Review {

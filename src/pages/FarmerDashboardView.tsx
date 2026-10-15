@@ -98,9 +98,9 @@ export const FarmerDashboardView: React.FC = () => {
   const [expAmount, setExpAmount] = useState('1500');
   const [expDesc, setExpDesc] = useState('Paid for weeding labor');
 
-  // Filter products for this farmer
+  // Filter products strictly for this farmer (isolated demo accounts)
   const farmerProducts = products.filter(
-    p => p.farmerId === currentUser?.id || currentUser?.username === 'rajesh_farmer' || currentUser?.role === 'admin'
+    p => p.farmerId === currentUser?.id || currentUser?.role === 'admin'
   );
 
   // Calculate Farmer Metrics

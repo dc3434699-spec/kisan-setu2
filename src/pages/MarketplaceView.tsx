@@ -194,6 +194,9 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
                   <img
                     src={product.image}
                     alt={product.name}
+                    onError={e => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&q=80';
+                    }}
                     onClick={() => onSelectProduct(product)}
                     className="w-full h-44 object-cover cursor-pointer group-hover:scale-105 transition-transform duration-300"
                   />
@@ -201,6 +204,11 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white shadow-xs">
                       {product.organic ? 'Organic' : 'Farm Direct'}
                     </span>
+                    {product.promotionalBadge && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500 text-white shadow-xs">
+                        {product.promotionalBadge}
+                      </span>
+                    )}
                   </div>
                   <button
                     onClick={() => openTraceability(product.batchId)}
@@ -238,13 +246,23 @@ export const MarketplaceView: React.FC<MarketplaceViewProps> = ({
 
                   <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
                     <div>
-                      <span className="text-base font-extrabold text-[#1B5E3B]">₹{product.pricePerUnit}</span>
-                      <span className="text-[10px] text-gray-500"> / {product.unit}</span>
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-base font-extrabold text-[#1B5E3B]">₹{product.pricePerUnit}</span>
+                        {product.originalPrice && product.originalPrice > product.pricePerUnit && (
+                          <span className="text-xs text-gray-400 line-through">₹{product.originalPrice}</span>
+                        )}
+                        <span className="text-[10px] text-gray-500"> / {product.unit}</span>
+                      </div>
+                      {product.discountPercent && product.discountPercent > 0 && (
+                        <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">
+                          {product.promotionalBadge || `${product.discountPercent}% OFF`}
+                        </span>
+                      )}
                     </div>
 
                     <button
                       onClick={() => addToCart(product, 1)}
-                      className="px-3.5 py-1.5 rounded-xl bg-[#1B5E3B] hover:bg-[#2D5A27] text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1"
+                      className="px-3.5 py-1.5 rounded-xl bg-[#1B5E3B] hover:bg-[#2D5A27] text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1 cursor-pointer"
                     >
                       <Plus className="w-3 h-3" />
                       <span>Add</span>

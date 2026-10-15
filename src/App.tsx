@@ -101,7 +101,7 @@ const MainApp: React.FC = () => {
       <MobileBottomNav currentView={currentView} setCurrentView={setCurrentView} />
 
       {/* 6. Global Interactive Modals */}
-      <AuthModal />
+      <AuthModal onNavigate={setCurrentView} />
       <CartDrawer onOpenOrders={() => setCurrentView('orders')} />
       <TraceabilityModal />
       <MapModal />

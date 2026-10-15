@@ -350,6 +350,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onOpenOrders }) => {
                       <img
                         src={item.product.image}
                         alt={item.product.name}
+                        onError={e => {
+                          (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&q=80';
+                        }}
                         className="w-14 h-14 rounded-xl object-cover shrink-0"
                       />
                       <div className="flex-1 min-w-0">

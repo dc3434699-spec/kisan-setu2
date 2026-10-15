@@ -58,6 +58,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
             <img
               src={product.image}
               alt={product.name}
+              onError={e => {
+                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&q=80';
+              }}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
@@ -66,6 +69,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
                 <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-600 text-white">
                   {product.organic ? '🌿 100% Certified Organic' : 'Direct Farm Produce'}
                 </span>
+                {product.promotionalBadge && (
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500 text-white shadow-xs">
+                    {product.promotionalBadge}
+                  </span>
+                )}
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-xs text-white">
                   {product.batchId}
                 </span>
@@ -84,9 +92,17 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
           {/* Price, Stock & Stepper */}
           <div className="flex flex-wrap items-center justify-between gap-4 bg-white border border-[#E5E0D5] p-4 rounded-2xl shadow-2xs">
             <div>
-              <div className="flex items-baseline gap-1">
+              <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-extrabold text-[#1B5E3B]">₹{product.pricePerUnit}</span>
+                {product.originalPrice && product.originalPrice > product.pricePerUnit && (
+                  <span className="text-sm text-gray-400 line-through">₹{product.originalPrice}</span>
+                )}
                 <span className="text-xs text-gray-500 font-medium">/ {product.unit}</span>
+                {product.discountPercent && product.discountPercent > 0 && (
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    {product.promotionalBadge || `${product.discountPercent}% OFF`}
+                  </span>
+                )}
               </div>
               <p className="text-[11px] text-emerald-700 font-semibold mt-0.5">
                 ✓ Fair Price Direct to Farmer (+42% higher payout than mandi)

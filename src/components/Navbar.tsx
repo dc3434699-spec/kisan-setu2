@@ -367,7 +367,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentView, setCurrentView }) =
                         <button
                           key={item.key}
                           onClick={() => {
-                            loginAsDemo(item.key);
+                            loginAsDemo(item.key, view => setCurrentView(view));
                             setIsDemoDropdownOpen(false);
                           }}
                           className={`w-full px-2.5 py-1.5 rounded-xl text-left text-xs flex flex-col transition-colors ${
